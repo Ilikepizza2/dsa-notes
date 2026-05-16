@@ -324,7 +324,7 @@ wmctrl -r :SELECT: -b add,skip_taskbar
     
     1. This and super refer to the instance variable and not the object
     
-    ![[Untitled.png]]
+    ![[DSA Notes/Private & Shared/Untitled.png]]
     
     1. Static blocks executed before constructors
     
@@ -653,7 +653,7 @@ wmctrl -r :SELECT: -b add,skip_taskbar
             
               
             
-            ![[Untitled 1.png]]
+            ![[DSA Notes/Private & Shared/Untitled 1.png]]
             
         
         - exec or execv
@@ -708,7 +708,7 @@ wmctrl -r :SELECT: -b add,skip_taskbar
             
             1. **Multithreading** is an extension of multitasking.
             
-            ![[Untitled 2.png]]
+            ![[DSA Notes/Private & Shared/Untitled 2.png]]
             
         
         - Spatial locality vs temporal locality
@@ -769,7 +769,7 @@ wmctrl -r :SELECT: -b add,skip_taskbar
         
         - Process
             
-            ![[Untitled 3.png]]
+            ![[DSA Notes/Private & Shared/Untitled 3.png]]
             
         
         - Spooling
@@ -798,9 +798,9 @@ wmctrl -r :SELECT: -b add,skip_taskbar
         
         - Process and PCB structure
             
-            ![[Untitled 4.png]]
+            ![[DSA Notes/Private & Shared/Untitled 4.png]]
             
-            ![[Untitled 5.png]]
+            ![[DSA Notes/Private & Shared/Untitled 5.png]]
             
             Process table is an array of PCB. It maps Pid with its pcb
             
@@ -1005,7 +1005,7 @@ wmctrl -r :SELECT: -b add,skip_taskbar
         
         - Diks architecture
             
-            ![[Untitled 6.png]]
+            ![[DSA Notes/Private & Shared/Untitled 6.png]]
             
         
         - Formulas
@@ -1027,22 +1027,22 @@ wmctrl -r :SELECT: -b add,skip_taskbar
             
             - Scan (elevator algorithm):
                 
-                ![[Untitled 7.png]]
+                ![[DSA Notes/Private & Shared/Untitled 7.png]]
                 
             
             - Look:
                 
-                ![[Untitled 8.png]]
+                ![[DSA Notes/Private & Shared/Untitled 8.png]]
                 
             
             - C-Scan:
                 
-                ![[Untitled 9.png]]
+                ![[DSA Notes/Private & Shared/Untitled 9.png]]
                 
             
             - C-Look:
                 
-                ![[Untitled 10.png]]
+                ![[DSA Notes/Private & Shared/Untitled 10.png]]
                 
             
         
@@ -1051,7 +1051,7 @@ wmctrl -r :SELECT: -b add,skip_taskbar
         
         - Contiguous allocation
             
-            ![[Untitled 11.png]]
+            ![[DSA Notes/Private & Shared/Untitled 11.png]]
             
             One file stored contiguously. Different files can have gaps between them though.
             
@@ -1060,7 +1060,7 @@ wmctrl -r :SELECT: -b add,skip_taskbar
             
             - linked list implementation
                 
-                ![[Untitled 12.png]]
+                ![[DSA Notes/Private & Shared/Untitled 12.png]]
                 
                   
                 
@@ -1069,7 +1069,7 @@ wmctrl -r :SELECT: -b add,skip_taskbar
                 
                 A index table(like index of book) is maintained which points to the file location on disk
                 
-                ![[Untitled 13.png]]
+                ![[DSA Notes/Private & Shared/Untitled 13.png]]
                 
             
             - Inode Unix structure
@@ -1096,7 +1096,7 @@ wmctrl -r :SELECT: -b add,skip_taskbar
         
         Exokernel
         
-        ![[Untitled 14.png]]
+        ![[DSA Notes/Private & Shared/Untitled 14.png]]
         
     
     - Interrupt vectors:
@@ -1346,13 +1346,13 @@ wmctrl -r :SELECT: -b add,skip_taskbar
             
             1st normal form and no non prime attribute should be partially dependent (If AB→C, and AB is candidate key. Then, A→C or B→C is wrong but AB→C should only be correct.
             
-            ![[Untitled 15.png]]
+            ![[DSA Notes/Private & Shared/Untitled 15.png]]
             
             3 normal form:
             
             2nd normal form, and no transitive dependency (only case should be if non prime → non prime. If prime→prime/prime→nonprime/nonprime→prime, then no problem.
             
-            ![[Untitled 16.png]]
+            ![[DSA Notes/Private & Shared/Untitled 16.png]]
             
             BCNF (Boyce Codd Normal Form)
             
@@ -1360,19 +1360,19 @@ wmctrl -r :SELECT: -b add,skip_taskbar
             
             1,2,3 normal forms always ensure dependency preserving decomposition but BCNF doesn’t.
             
-            ![[Untitled 17.png]]
+            ![[DSA Notes/Private & Shared/Untitled 17.png]]
             
             4 normal form:
             
             BCNF + no multivalued dependency
             
-            ![[Untitled 18.png]]
+            ![[DSA Notes/Private & Shared/Untitled 18.png]]
             
             5 normal form:
             
             In 4 NF + only lossless decomposition (tables me tod do jitna tod skte)
             
-            ![[Untitled 19.png]]
+            ![[DSA Notes/Private & Shared/Untitled 19.png]]
             
         
         - Functional dependency
@@ -1461,9 +1461,9 @@ wmctrl -r :SELECT: -b add,skip_taskbar
         
         - What happens when you run a query
             
-            ![[Untitled 20.png]]
+            ![[DSA Notes/Private & Shared/Untitled 20.png]]
             
-            ![[Untitled 21.png]]
+            ![[DSA Notes/Private & Shared/Untitled 21.png]]
             
         
         - Concurrency problems:
@@ -1472,12 +1472,12 @@ wmctrl -r :SELECT: -b add,skip_taskbar
                 
                 A transaction in a Database Management System (DBMS) is a logical unit of work that performs a series of operations on the data. These operations can involve inserting, updating, or deleting data in the database. A transaction should be ACID compliant.
                 
-                ![[Untitled 22.png]]
+                ![[DSA Notes/Private & Shared/Untitled 22.png]]
                 
             
             - Steps of transaction
                 
-                ![[Untitled 23.png]]
+                ![[DSA Notes/Private & Shared/Untitled 23.png]]
                 
             
             - Types of schedule:
@@ -1535,18 +1535,18 @@ wmctrl -r :SELECT: -b add,skip_taskbar
             > A Computer Science portal for geeks.  
             > [https://www.geeksforgeeks.org/concurrency-problems-in-dbms-transactions/](https://www.geeksforgeeks.org/concurrency-problems-in-dbms-transactions/)  
             
-            ![[Untitled 24.png]]
+            ![[DSA Notes/Private & Shared/Untitled 24.png]]
             
         
         - Indexing
             
             Gold: https://youtu.be/YuRO9-rOgv4
             
-            ![[Untitled 25.png]]
+            ![[DSA Notes/Private & Shared/Untitled 25.png]]
             
-            ![[Untitled 26.png]]
+            ![[DSA Notes/Private & Shared/Untitled 26.png]]
             
-            ![[Untitled 27.png]]
+            ![[DSA Notes/Private & Shared/Untitled 27.png]]
             
             In a database, an index is a data structure that facilitates quick access to specific data within a table.
             
@@ -1563,9 +1563,9 @@ wmctrl -r :SELECT: -b add,skip_taskbar
         
         - Triggers
             
-            ![[Untitled 28.png]]
+            ![[DSA Notes/Private & Shared/Untitled 28.png]]
             
-            ![[Untitled 29.png]]
+            ![[DSA Notes/Private & Shared/Untitled 29.png]]
             
         
         - CAP Theorem
@@ -2013,12 +2013,12 @@ wmctrl -r :SELECT: -b add,skip_taskbar
             
             They also tell their respective window size
             
-            ![[Untitled 30.png]]
+            ![[DSA Notes/Private & Shared/Untitled 30.png]]
             
         
         1. Connection Termination - 4 way handshake
             
-            ![[Untitled 31.png]]
+            ![[DSA Notes/Private & Shared/Untitled 31.png]]
             
             4 way handshake is required because tcp can be imagined as full duplex mode of communication. Now when client requests to finish, the server might not have finished sending data. Once the server finishes sending data, it sends the FIN packet and after ack, the connection is terminated.
             
