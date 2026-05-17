@@ -1,16 +1,9 @@
 import os
+import glob
 import re
 
-file_path = "/home/umang/ObsidianProjects/prep/prep/Private & Shared/Cisco ca11832d3bf645cfbd2bb1da3b25dc0c.html"
-with open(file_path, "r", encoding="utf-8") as f:
-    html = f.read()
-
-# 1. Update the injected JavaScript
-# We will replace the old script with the new one
-old_script_start = '<script>\ndocument.addEventListener("DOMContentLoaded", () => {'
-if old_script_start in html:
-    # Remove the old script
-    html = re.sub(r'<script>\ndocument\.addEventListener\("DOMContentLoaded".*?</script>', '', html, flags=re.DOTALL)
+directory = "/home/umang/ObsidianProjects/prep/prep/Private & Shared"
+html_files = glob.glob(os.path.join(directory, "*.html"))
 
 new_script = """
 <script>
@@ -37,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: currentHTML
             }).then(r => {
                 if(r.ok) {
-                    // Create a tiny toast notification
                     const toast = document.createElement("div");
                     toast.textContent = "Saved!";
                     toast.style.position = "fixed";
@@ -51,34 +43,81 @@ document.addEventListener("DOMContentLoaded", () => {
                     document.body.appendChild(toast);
                     setTimeout(() => toast.remove(), 2000);
                 }
-            }).catch(e => {
-                console.error("Save failed", e);
+            }).catch(err => {
+                console.error("Save failed", err);
                 alert("Failed to save!");
             });
+            return;
+        }
+
+        if (e.key === ' ' || e.key === 'Enter') {
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return;
+            const range = selection.getRangeAt(0);
+            const node = range.startContainer;
+            
+            const element = node.nodeType === 3 ? node.parentElement : node;
+            const summary = element.closest ? element.closest('summary') : null;
+
+            let isSlashCommand = false;
+            
+            if (node.nodeType === 3) { 
+                const textBeforeCursor = node.textContent.substring(0, range.startOffset);
+                const isToggle = textBeforeCursor.endsWith("/toggle") && (textBeforeCursor.length === 7 || textBeforeCursor[textBeforeCursor.length - 8].trim() === '');
+                const isCode = textBeforeCursor.endsWith("/code") && (textBeforeCursor.length === 5 || textBeforeCursor[textBeforeCursor.length - 6].trim() === '');
+                
+                if (isToggle || isCode) {
+                    e.preventDefault();
+                    isSlashCommand = true;
+                    
+                    const lengthToDelete = isToggle ? 7 : 5;
+                    range.setStart(node, range.startOffset - lengthToDelete);
+                    range.deleteContents();
+                    
+                    if (isToggle) {
+                        const toggleHtml = '<ul class="toggle"><li><details open><summary>New Toggle</summary><div style="display:contents" dir="auto"><p><br></p></div></details></li></ul><p><br></p>';
+                        document.execCommand('insertHTML', false, toggleHtml);
+                    } else if (isCode) {
+                        const codeHtml = '<div style="display:contents" dir="auto"><pre class="code code-wrap" style="background: black; color: white; padding: 1em; border-radius: 5px; min-height: 2em;"><code style="background: black; color: white;"></code></pre></div><p><br></p>';
+                        document.execCommand('insertHTML', false, codeHtml);
+                    }
+                }
+            }
+
+            if (!isSlashCommand && summary) {
+                e.preventDefault();
+                if (e.key === ' ') {
+                    document.execCommand('insertText', false, ' ');
+                } else {
+                    document.execCommand('insertHTML', false, '<br>');
+                }
+            }
         }
     });
 });
 </script>
 """
-html = html.replace("</body>", new_script + "</body>")
 
-
-# 2. Add code block section at the top of each toggle list with a black background
-# Notion toggles are <details><summary>Title</summary>...
-# We will insert a pre/code block immediately after <summary>...</summary>
 def inject_code_block(match):
     summary = match.group(0)
     return summary + '\n<div style="display:contents" dir="auto"><pre class="code code-wrap" style="background: black; color: white; padding: 1em; border-radius: 5px; min-height: 2em;"><code style="background: black; color: white;"></code></pre></div>'
 
-# We split the html by <details> to carefully inject after the FIRST <summary> in each details, 
-# but simply substituting <summary> is easier, as long as we don't double inject.
-# Let's remove any previously injected black background code blocks first (in case we run this multiple times)
-html = re.sub(r'\n<div style="display:contents" dir="auto"><pre class="code code-wrap" style="background: black; color: white;[^>]+><code style="background: black; color: white;">.*?</code></pre></div>', '', html, flags=re.DOTALL)
+for file_path in html_files:
+    with open(file_path, "r", encoding="utf-8") as f:
+        html = f.read()
 
-# Now inject it
-html = re.sub(r'(<summary>.*?</summary>)', inject_code_block, html, flags=re.DOTALL)
+    # Remove old injected script entirely if present
+    html = re.sub(r'<script>\ndocument\.addEventListener\("DOMContentLoaded".*?</script>', '', html, flags=re.DOTALL)
+    
+    html = html.replace("</body>", new_script + "</body>")
 
-with open(file_path, "w", encoding="utf-8") as f:
-    f.write(html)
+    # Remove any previously injected black background code blocks first
+    html = re.sub(r'\n<div style="display:contents" dir="auto"><pre class="code code-wrap" style="background: black; color: white;[^>]+><code style="background: black; color: white;">.*?</code></pre></div>', '', html, flags=re.DOTALL)
+    
+    # Now inject the automatic code blocks
+    html = re.sub(r'(<summary>.*?</summary>)', inject_code_block, html, flags=re.DOTALL)
 
-print("HTML successfully updated with Ctrl+S save and code blocks.")
+    with open(file_path, "w", encoding="utf-8") as f:
+        f.write(html)
+        
+    print(f"HTML successfully updated for: {os.path.basename(file_path)}")
