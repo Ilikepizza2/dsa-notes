@@ -1351,6 +1351,8 @@ WHERE phone_number = 123;</code></pre></div></details></li></ul></div></details>
 
 
 
+
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const pageBody = document.querySelector(".page-body");
@@ -1420,8 +1422,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     range.deleteContents();
                     
                     if (isToggle) {
-                        const toggleHtml = '<ul class="toggle"><li><details open><summary>New Toggle</summary>
-<div style="display:contents" dir="auto"><pre class="code code-wrap" style="background: black; color: white; padding: 1em; border-radius: 5px; min-height: 2em;"><code style="background: black; color: white;"></code></pre></div><div style="display:contents" dir="auto"><p><br></p></div></details></li></ul><p><br></p>';
+                        const toggleHtml = '<ul class="toggle"><li><details open><summary>New Toggle</summary><div style="display:contents" dir="auto"><p><br></p></div></details></li></ul><p><br></p>';
                         document.execCommand('insertHTML', false, toggleHtml);
                     } else if (isCode) {
                         const codeHtml = '<div style="display:contents" dir="auto"><pre class="code code-wrap" style="background: black; color: white; padding: 1em; border-radius: 5px; min-height: 2em;"><code style="background: black; color: white;"></code></pre></div><p><br></p>';
@@ -1442,4 +1443,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 </script>
+
 </body></html>
