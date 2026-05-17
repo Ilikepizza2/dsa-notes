@@ -107,15 +107,16 @@ for file_path in html_files:
         html = f.read()
 
     # Remove old injected script entirely if present
-    html = re.sub(r'<script>\ndocument\.addEventListener\("DOMContentLoaded".*?</script>', '', html, flags=re.DOTALL)
-    
-    html = html.replace("</body>", new_script + "</body>")
+    html = re.sub(r'<script>\s*document\.addEventListener\("DOMContentLoaded".*?</script>', '', html, flags=re.DOTALL)
 
     # Remove any previously injected black background code blocks first
     html = re.sub(r'\n<div style="display:contents" dir="auto"><pre class="code code-wrap" style="background: black; color: white;[^>]+><code style="background: black; color: white;">.*?</code></pre></div>', '', html, flags=re.DOTALL)
     
     # Now inject the automatic code blocks
     html = re.sub(r'(<summary>.*?</summary>)', inject_code_block, html, flags=re.DOTALL)
+
+    # Finally append the script so its string literals are not modified by the above re.sub
+    html = html.replace("</body>", new_script + "\n</body>")
 
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(html)
