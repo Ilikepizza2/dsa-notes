@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div contenteditable="true">
+  <details>
+    <summary>Click me</summary>
+    <p>Some content</p>
+  </details>
+</div>
+<script>
+document.addEventListener('keydown', function(e) {
+  if (e.target.closest('summary')) {
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      if (e.key === ' ') {
+        document.execCommand('insertText', false, ' ');
+      } else {
+        document.execCommand('insertHTML', false, '<br><br>'); 
+        // or insertParagraph
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
