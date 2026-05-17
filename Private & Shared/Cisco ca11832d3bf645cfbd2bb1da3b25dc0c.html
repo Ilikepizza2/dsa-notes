@@ -1349,6 +1349,8 @@ WHERE phone_number = 123;</code></pre></div></details></li></ul></div></details>
 </p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span>
 
 
+
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const pageBody = document.querySelector(".page-body");
@@ -1373,7 +1375,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: currentHTML
             }).then(r => {
                 if(r.ok) {
-                    // Create a tiny toast notification
                     const toast = document.createElement("div");
                     toast.textContent = "Saved!";
                     toast.style.position = "fixed";
@@ -1387,10 +1388,56 @@ document.addEventListener("DOMContentLoaded", () => {
                     document.body.appendChild(toast);
                     setTimeout(() => toast.remove(), 2000);
                 }
-            }).catch(e => {
-                console.error("Save failed", e);
+            }).catch(err => {
+                console.error("Save failed", err);
                 alert("Failed to save!");
             });
+            return;
+        }
+
+        if (e.key === ' ' || e.key === 'Enter') {
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return;
+            const range = selection.getRangeAt(0);
+            const node = range.startContainer;
+            
+            const element = node.nodeType === 3 ? node.parentElement : node;
+            const summary = element.closest ? element.closest('summary') : null;
+
+            let isSlashCommand = false;
+            
+            if (node.nodeType === 3) { 
+                const textBeforeCursor = node.textContent.substring(0, range.startOffset);
+                const isToggle = textBeforeCursor.endsWith("/toggle") && (textBeforeCursor.length === 7 || textBeforeCursor[textBeforeCursor.length - 8].trim() === '');
+                const isCode = textBeforeCursor.endsWith("/code") && (textBeforeCursor.length === 5 || textBeforeCursor[textBeforeCursor.length - 6].trim() === '');
+                
+                if (isToggle || isCode) {
+                    e.preventDefault();
+                    isSlashCommand = true;
+                    
+                    const lengthToDelete = isToggle ? 7 : 5;
+                    range.setStart(node, range.startOffset - lengthToDelete);
+                    range.deleteContents();
+                    
+                    if (isToggle) {
+                        const toggleHtml = '<ul class="toggle"><li><details open><summary>New Toggle</summary>
+<div style="display:contents" dir="auto"><pre class="code code-wrap" style="background: black; color: white; padding: 1em; border-radius: 5px; min-height: 2em;"><code style="background: black; color: white;"></code></pre></div><div style="display:contents" dir="auto"><p><br></p></div></details></li></ul><p><br></p>';
+                        document.execCommand('insertHTML', false, toggleHtml);
+                    } else if (isCode) {
+                        const codeHtml = '<div style="display:contents" dir="auto"><pre class="code code-wrap" style="background: black; color: white; padding: 1em; border-radius: 5px; min-height: 2em;"><code style="background: black; color: white;"></code></pre></div><p><br></p>';
+                        document.execCommand('insertHTML', false, codeHtml);
+                    }
+                }
+            }
+
+            if (!isSlashCommand && summary) {
+                e.preventDefault();
+                if (e.key === ' ') {
+                    document.execCommand('insertText', false, ' ');
+                } else {
+                    document.execCommand('insertHTML', false, '<br>');
+                }
+            }
         }
     });
 });
