@@ -53,7 +53,7 @@ def auto_sync():
         branch_name = f"scratch_sync_{timestamp}"
         
         subprocess.run(["git", "checkout", "-b", branch_name], cwd=REPO_DIR)
-        res = subprocess.run(["git", "commit", "-m", "Auto sync from browser"], cwd=REPO_DIR, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        res = subprocess.run(["git", "commit", "-m", "fixes"], cwd=REPO_DIR, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         
         if res.returncode == 0:
             subprocess.run(["git", "push", "-u", "origin", branch_name], cwd=REPO_DIR, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -72,10 +72,10 @@ def auto_sync():
                     
                     req = urllib.request.Request(f"https://api.github.com/repos/{repo}/pulls", 
                         data=json.dumps({
-                            "title": "Auto sync from browser",
+                            "title": "fixes",
                             "head": branch_name,
                             "base": "main",
-                            "body": "Automated PR from browser sync"
+                            "body": "PR for fixes"
                         }).encode("utf-8"),
                         headers={
                             "Authorization": f"Bearer {token}",
